@@ -4,9 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.*;
 
 import java.time.Duration;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class IndexControllerTest {
@@ -24,6 +26,8 @@ class IndexControllerTest {
     void index() {
         assertEquals("index", controller.index());
         assertEquals("index", controller.index(), "Wrong view returned");
+
+        assertThat(controller.index()).isEqualTo("index");
     }
 
     @DisplayName("Test exception")
@@ -50,5 +54,54 @@ class IndexControllerTest {
             Thread.sleep(2000);
             System.out.println("I got here, method 2");
         });
+    }
+
+    @Disabled
+    @Test
+    void testAssumptionTrue() {
+
+        assertTrue("ADEK".equalsIgnoreCase(System.getenv("ADEK_SA")));
+    }
+
+    @Test
+    void testAssumptionTrueAssumptionIsTrue() {
+
+        assertTrue("ADEK".equalsIgnoreCase("ADEK"));
+    }
+
+    @EnabledOnOs(OS.MAC)
+    @Test
+    void testMeOnMacOS() {
+
+    }
+
+    @EnabledOnOs(OS.WINDOWS)
+    @Test
+    void testMeOnWindows() {
+
+    }
+
+    @EnabledOnJre(JRE.JAVA_8)
+    @Test
+    void testMeOnJava8() {
+
+    }
+
+    @EnabledOnJre(JRE.JAVA_11)
+    @Test
+    void testMeOnJava11() {
+
+    }
+
+    @EnabledIfEnvironmentVariable(named = "GITHUB_USER", matches = "AdRusinek")
+    @Test
+    void testGithubUserName() {
+
+    }
+
+    @EnabledIfEnvironmentVariable(named = "GITHUB_USER", matches = "Adrian")
+    @Test
+    void testGithubUserNameIfAdrian() {
+
     }
 }
